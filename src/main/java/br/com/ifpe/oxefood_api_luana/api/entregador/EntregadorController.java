@@ -1,4 +1,4 @@
-package br.com.ifpe.oxefood_api_luana.api.etregador;
+package br.com.ifpe.oxefood_api_luana.api.entregador;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,7 +15,7 @@ import br.com.ifpe.oxefood_api_luana.modelo.entregador.EntregadorService;
 @RestController
 @RequestMapping("/api/entregador")
 @CrossOrigin
-public class EntreadorController {
+public class EntregadorController {
     
     @Autowired
     private EntregadorService entregadorService;

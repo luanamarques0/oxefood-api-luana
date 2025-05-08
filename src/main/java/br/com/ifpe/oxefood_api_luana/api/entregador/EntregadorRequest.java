@@ -1,4 +1,4 @@
-package br.com.ifpe.oxefood_api_luana.api.etregador;
+package br.com.ifpe.oxefood_api_luana.api.entregador;
 
 import java.time.LocalDate;
 
