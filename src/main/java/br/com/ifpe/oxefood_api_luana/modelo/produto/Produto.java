@@ -1,11 +1,40 @@
 package br.com.ifpe.oxefood_api_luana.modelo.produto;
 
-import br.com.ifpe.oxefood_api_luana.util.entity.EntidadeAuditavel;
-import lombok.Builder;
-import lombok.Data;
+import org.hibernate.annotations.SQLRestriction;
 
-@Data
+import br.com.ifpe.oxefood_api_luana.util.entity.EntidadeAuditavel;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Entity
+@Table(name = "produto")
+@SQLRestriction("habilitado = true")
+
 @Builder
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Produto extends EntidadeAuditavel{
     
+    @Column
+    private String titulo;
+
+    @Column
+    private String descricao;
+
+    @Column
+    private Double ValorUnitario;
+
+    @Column
+    private Integer tempoEntregaMinimo;
+
+    @Column
+    private Integer tempoEntregaMaximo;
 }
