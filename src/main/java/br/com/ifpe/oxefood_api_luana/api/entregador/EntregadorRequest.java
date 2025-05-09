@@ -5,7 +5,15 @@ import java.time.LocalDate;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import br.com.ifpe.oxefood_api_luana.modelo.entregador.Entregador;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class EntregadorRequest {
 
     private String nome;
@@ -39,6 +47,8 @@ public class EntregadorRequest {
 
     private String enderecoUf;
 
+    private Boolean ativo;
+
     public Entregador build() {
         return Entregador.builder()
             .nome(nome)
@@ -56,6 +66,7 @@ public class EntregadorRequest {
             .enderecoCidade(enderecoCidade)
             .enderecoCep(enderecoCep)
             .enderecoUf(enderecoUf)
+            .ativo(ativo)
             .build();
     }
 
