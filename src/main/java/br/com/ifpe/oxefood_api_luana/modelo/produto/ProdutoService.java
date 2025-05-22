@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.ifpe.oxefood_api_luana.modelo.cliente.Cliente;
 import br.com.ifpe.oxefood_api_luana.modelo.entregador.Entregador;
 import jakarta.transaction.Transactional;
 
@@ -19,7 +20,7 @@ public class ProdutoService {
         return repository.save(produto);
     }
 
-    public List<Produto> listarTodosProdutos(){
+    public List<Produto> listarTodosProdutos() {
         return repository.findAll();
     }
 
@@ -37,6 +38,15 @@ public class ProdutoService {
         produto.setValorUnitario(produtoAlterado.getValorUnitario());
         produto.setTempoEntregaMinimo(produtoAlterado.getTempoEntregaMinimo());
         produto.setTempoEntregaMaximo(produtoAlterado.getTempoEntregaMaximo());
+        repository.save(produto);
+    }
+
+    @Transactional
+    public void delete(Long id) {
+
+        Produto produto = repository.findById(id).get();
+        produto.setHabilitado(Boolean.FALSE);
+
         repository.save(produto);
     }
 
