@@ -39,7 +39,17 @@ public class ClienteService {
         cliente.setFoneCelular(clienteAlterado.getFoneCelular());
         cliente.setFoneFixo(clienteAlterado.getFoneFixo());
 
-        repository.save(cliente);//O save serve para cadastrar e para alterar, se passar os parametros com id ele cria um novo, se não altera.
+        repository.save(cliente);// O save serve para cadastrar e para alterar, se passar os parametros com id
+                                 // ele cria um novo, se não altera.
+    }
+
+    @Transactional
+    public void delete(Long id) {
+
+        Cliente cliente = repository.findById(id).get();
+        cliente.setHabilitado(Boolean.FALSE);
+
+        repository.save(cliente);
     }
 
 }
