@@ -5,8 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.ifpe.oxefood_api_luana.modelo.cliente.Cliente;
-import br.com.ifpe.oxefood_api_luana.modelo.entregador.Entregador;
 import jakarta.transaction.Transactional;
 
 @Service

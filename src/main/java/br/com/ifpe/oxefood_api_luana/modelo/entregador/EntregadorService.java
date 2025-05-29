@@ -3,8 +3,6 @@ package br.com.ifpe.oxefood_api_luana.modelo.entregador;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.ifpe.oxefood_api_luana.modelo.produto.Produto;
-
 import java.util.List;
 import jakarta.transaction.Transactional;
 

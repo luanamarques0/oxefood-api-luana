@@ -1,0 +1,46 @@
+package br.com.ifpe.oxefood_api_luana.api.produto.categoria;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import br.com.ifpe.oxefood_api_luana.modelo.produto.categoria.CategoriaProduto;
+import br.com.ifpe.oxefood_api_luana.modelo.produto.categoria.CategoriaProdutoService;
+
+@RestController
+@RequestMapping("api/categoria")
+@CrossOrigin
+public class CategoriaProdutoController {
+
+    @Autowired
+    private CategoriaProdutoService categoriaService;
+
+    @PostMapping
+    public ResponseEntity<CategoriaProduto> save(@RequestBody CategoriaProdutoRequest request) {
+
+        CategoriaProduto categoria = categoriaService.save(request.build());
+        return new ResponseEntity<CategoriaProduto>(categoria, HttpStatus.CREATED);
+    }
+
+    @GetMapping
+    public List<CategoriaProduto> listaTodasCategoriasProdutos() {
+        return categoriaService.listaTodasCategoriasProdutos();
+    }
+
+    @GetMapping("/{id}")
+    public CategoriaProduto obterPorId(@PathVariable Long id) {
+        return categoriaService.obterPorId(id);
+    }
+
+
+    
+}

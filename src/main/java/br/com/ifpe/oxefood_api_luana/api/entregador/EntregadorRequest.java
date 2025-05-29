@@ -22,7 +22,7 @@ public class EntregadorRequest {
 
     private String rg;
 
-    @JsonFormat(pattern = "dd/MM/yyyy")
+    // @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate dataNascimento;
 
     private String foneCelular;
