@@ -26,4 +26,22 @@ public class CategoriaProdutoService {
         return repository.findById(id).get();
     }
 
+    @Transactional
+    public void update(Long id, CategoriaProduto categoriaAlterada) {
+
+        CategoriaProduto categoria = repository.findById(id).get();
+        categoria.setDescricao(categoriaAlterada.getDescricao());
+        
+        repository.save(categoria);
+    }
+
+    @Transactional
+    public void delete(Long id) {
+
+        CategoriaProduto categoria = repository.findById(id).get();
+        categoria.setHabilitado(Boolean.FALSE);
+
+        repository.save(categoria);
+    }
+
 }
