@@ -9,6 +9,7 @@ import jakarta.transaction.Transactional;
 
 @Service
 public class ProdutoService {
+    
     @Autowired
     private ProdutoRepository repository;
 
@@ -30,6 +31,7 @@ public class ProdutoService {
     public void update(Long id, Produto produtoAlterado) {
 
         Produto produto = repository.findById(id).get();
+        produto.setCategoria(produtoAlterado.getCategoria());
         produto.setTitulo(produtoAlterado.getTitulo());
         produto.setCodigo(produtoAlterado.getCodigo());
         produto.setDescricao(produtoAlterado.getDescricao());

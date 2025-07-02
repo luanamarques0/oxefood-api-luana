@@ -1,16 +1,14 @@
-package br.com.ifpe.oxefood_api_luana.modelo.cliente;
+package br.com.ifpe.oxefood_api_luana.modelo.comprador;
 
 import java.time.LocalDate;
-import java.util.List;
 
 import org.hibernate.annotations.SQLRestriction;
 
-import br.com.ifpe.oxefood_api_luana.modelo.cliente.endereco.EnderecoCliente;
+import br.com.ifpe.oxefood_api_luana.modelo.segmento.Segmento;
 import br.com.ifpe.oxefood_api_luana.util.entity.EntidadeAuditavel;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,9 +16,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-
 @Entity
-@Table(name = "Cliente")
+@Table(name = "Comprador")
 @SQLRestriction("habilitado = true")
 
 @Builder
@@ -28,24 +25,26 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Cliente extends EntidadeAuditavel {
-    
-   @OneToMany(mappedBy = "cliente", orphanRemoval = true, fetch = FetchType.EAGER)
-   private List<EnderecoCliente> enderecos;
+public class Comprador extends EntidadeAuditavel{
+
+    @ManyToOne
+    private Segmento segmento;
 
     @Column
     private String nome;
 
     @Column
-    private LocalDate dataNascimento;
+    private String enderecoComercial;
+
+    @Column 
+    private String enderecoResidencial;
 
     @Column
-    private String cpf;
+    private Double comissao;
 
     @Column
-    private String foneCelular;
+    private Integer qtdComprasMediaMes;
 
     @Column
-    private String foneFixo;
-
+    private LocalDate contratadoEM;
 }
