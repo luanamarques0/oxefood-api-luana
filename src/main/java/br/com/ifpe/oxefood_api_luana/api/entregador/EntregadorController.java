@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.ifpe.oxefood_api_luana.modelo.entregador.Entregador;
 import br.com.ifpe.oxefood_api_luana.modelo.entregador.EntregadorService;
+import jakarta.validation.Valid;
 
 import java.util.List;
 
@@ -22,13 +23,13 @@ import java.util.List;
 @RequestMapping("/api/entregador")
 @CrossOrigin
 public class EntregadorController {
-    
+
     @Autowired
     private EntregadorService entregadorService;
 
     @PostMapping
-    public ResponseEntity<Entregador> save(@RequestBody EntregadorRequest request) {
-        
+    public ResponseEntity<Entregador> save(@RequestBody @Valid EntregadorRequest request) {
+
         Entregador entregador = entregadorService.save(request.build());
         return new ResponseEntity<Entregador> (entregador, HttpStatus.CREATED);
     }

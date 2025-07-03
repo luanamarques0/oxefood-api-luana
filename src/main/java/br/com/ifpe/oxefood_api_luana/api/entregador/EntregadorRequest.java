@@ -2,9 +2,13 @@ package br.com.ifpe.oxefood_api_luana.api.entregador;
 
 import java.time.LocalDate;
 
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.br.CPF;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import br.com.ifpe.oxefood_api_luana.modelo.entregador.Entregador;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,8 +20,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class EntregadorRequest {
 
+    @NotBlank(message = "O Nome é de preenchimento obrigatório")
     private String nome;
 
+    @NotBlank(message = "O CPF é de preenchimento obrigatório")
+    @CPF
     private String cpf;
 
     private String rg;
@@ -25,8 +32,11 @@ public class EntregadorRequest {
     // @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate dataNascimento;
 
+    @NotBlank(message = "O telefone é preenchimento obrigatório")
+    @Length(min = 8, max = 20, message = "O campo Fone tem que ter entre {min} e {max} caracteres")
     private String foneCelular;
 
+    @Length(min = 8, max = 20, message = "O campo Fone tem que ter entre {min} e {max} caracteres")
     private String foneFixo;
 
     private Integer qtdEntregasRealizadas;
@@ -51,24 +61,23 @@ public class EntregadorRequest {
 
     public Entregador build() {
         return Entregador.builder()
-            .nome(nome)
-            .cpf(cpf)
-            .rg(rg)
-            .dataNascimento(dataNascimento)
-            .foneCelular(foneCelular)
-            .foneFixo(foneFixo)
-            .qtdEntregasRealizadas(qtdEntregasRealizadas)
-            .valorFrete(valorFrete)
-            .enderecoRua(enderecoRua)
-            .enderecoComplemento(enderecoComplemento)
-            .enderecoNumero(enderecoNumero)
-            .enderecoBairro(enderecoBairro)
-            .enderecoCidade(enderecoCidade)
-            .enderecoCep(enderecoCep)
-            .enderecoUf(enderecoUf)
-            .ativo(ativo)
-            .build();
+                .nome(nome)
+                .cpf(cpf)
+                .rg(rg)
+                .dataNascimento(dataNascimento)
+                .foneCelular(foneCelular)
+                .foneFixo(foneFixo)
+                .qtdEntregasRealizadas(qtdEntregasRealizadas)
+                .valorFrete(valorFrete)
+                .enderecoRua(enderecoRua)
+                .enderecoComplemento(enderecoComplemento)
+                .enderecoNumero(enderecoNumero)
+                .enderecoBairro(enderecoBairro)
+                .enderecoCidade(enderecoCidade)
+                .enderecoCep(enderecoCep)
+                .enderecoUf(enderecoUf)
+                .ativo(ativo)
+                .build();
     }
 
-    
 }
