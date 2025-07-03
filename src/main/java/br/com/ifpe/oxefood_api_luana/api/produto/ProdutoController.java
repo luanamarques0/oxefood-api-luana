@@ -19,6 +19,7 @@ import org.springframework.http.ResponseEntity;
 import br.com.ifpe.oxefood_api_luana.modelo.produto.Produto;
 import br.com.ifpe.oxefood_api_luana.modelo.produto.ProdutoService;
 import br.com.ifpe.oxefood_api_luana.modelo.produto.categoria.CategoriaProdutoService;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/produto")
@@ -32,7 +33,7 @@ public class ProdutoController {
     private CategoriaProdutoService categoriaProdutoService;
 
     @PostMapping
-    public ResponseEntity<Produto> save(@RequestBody ProdutoRequest request) {
+    public ResponseEntity<Produto> save(@RequestBody @Valid ProdutoRequest request) {
 
         Produto produtoNovo = request.build();
         produtoNovo.setCategoria((categoriaProdutoService.obterPorId(request.getIdCategoria())));
