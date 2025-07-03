@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.ifpe.oxefood_api_luana.modelo.cliente.endereco.EnderecoCliente;
 import br.com.ifpe.oxefood_api_luana.modelo.cliente.endereco.EnderecoClienteRepository;
+import br.com.ifpe.oxefood_api_luana.util.exception.ClienteException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +23,9 @@ public class ClienteService {
     @Transactional // Tudo que for feito no db só pode ser criado se tudo der certo, se der um
                    // unico erro td a transação falha
     public Cliente save(Cliente cliente) {
+        if ((!cliente.getFoneCelular().startsWith("(81)"))) {
+            throw new ClienteException(ClienteException.MSG_TELEFON_INVALIDO);
+        }
         // retorna o cliente com o ID(Pq ele recebe id no db)
         cliente.setHabilitado(Boolean.TRUE);
         return repository.save(cliente);
