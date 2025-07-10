@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.ifpe.oxefood_api_luana.modelo.acesso.Perfil;
 import br.com.ifpe.oxefood_api_luana.modelo.acesso.PerfilRepository;
+import br.com.ifpe.oxefood_api_luana.modelo.acesso.Usuario;
 import br.com.ifpe.oxefood_api_luana.modelo.acesso.UsuarioService;
 import br.com.ifpe.oxefood_api_luana.modelo.cliente.endereco.EnderecoCliente;
 import br.com.ifpe.oxefood_api_luana.modelo.cliente.endereco.EnderecoClienteRepository;
@@ -31,7 +32,7 @@ public class ClienteService {
 
     @Transactional // Tudo que for feito no db só pode ser criado se tudo der certo, se der um
                    // unico erro td a transação falha
-    public Cliente save(Cliente cliente) {
+    public Cliente save(Cliente cliente, Usuario usuarioLogado) {
         if ((!cliente.getFoneCelular().startsWith("(81)"))) {
             throw new ClienteException(ClienteException.MSG_TELEFON_INVALIDO);
         }
@@ -44,7 +45,7 @@ public class ClienteService {
         }
 
         cliente.setHabilitado(Boolean.TRUE);
-
+        cliente.setCriadoPor(usuarioLogado); //setar o usuario logado
         Cliente clienteSalvo = repository.save(cliente);
 
         return clienteSalvo; // retorna o cliente com o ID(Pq ele recebe id no db)
@@ -62,7 +63,7 @@ public class ClienteService {
     }
 
     @Transactional
-    public void update(Long id, Cliente clienteAlterado) {
+    public void update(Long id, Cliente clienteAlterado, Usuario usuarioLogado) {
 
         Cliente cliente = repository.findById(id).get();
         cliente.setNome(clienteAlterado.getNome());
@@ -70,6 +71,8 @@ public class ClienteService {
         cliente.setCpf(clienteAlterado.getCpf());
         cliente.setFoneCelular(clienteAlterado.getFoneCelular());
         cliente.setFoneFixo(clienteAlterado.getFoneFixo());
+
+        cliente.setUltimaModificacaoPor(usuarioLogado); // Setar o usuario logado
 
         repository.save(cliente);// O save serve para cadastrar e para alterar, se passar os parametros com id
                                  // ele cria um novo, se não altera.

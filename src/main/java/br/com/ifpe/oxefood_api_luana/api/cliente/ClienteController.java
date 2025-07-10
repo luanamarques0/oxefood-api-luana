@@ -14,9 +14,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.ifpe.oxefood_api_luana.api.cliente.endereco.EnderecoClienteRequest;
+import br.com.ifpe.oxefood_api_luana.modelo.acesso.UsuarioService;
 import br.com.ifpe.oxefood_api_luana.modelo.cliente.Cliente;
 import br.com.ifpe.oxefood_api_luana.modelo.cliente.ClienteService;
 import br.com.ifpe.oxefood_api_luana.modelo.cliente.endereco.EnderecoCliente;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 
 import java.util.List;
@@ -29,11 +31,14 @@ public class ClienteController {
     @Autowired
     private ClienteService clienteService;
 
+    @Autowired
+    private UsuarioService usuarioService;
+
     @PostMapping
-    public ResponseEntity<Cliente> save(@RequestBody @Valid ClienteRequest request) {
+    public ResponseEntity<Cliente> save(@RequestBody @Valid ClienteRequest clienteRequest, HttpServletRequest request) {
 
 
-        Cliente cliente = clienteService.save(request.build()); // build cria o cliente a partir do request
+        Cliente cliente = clienteService.save(request.build(), usuarioService.obterUsuarioLogado(request)); // build cria o cliente a partir do request
         return new ResponseEntity<Cliente>(cliente, HttpStatus.CREATED);
     }
 
@@ -48,9 +53,9 @@ public class ClienteController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Cliente> update(@PathVariable("id") Long id, @RequestBody ClienteRequest request) {
+    public ResponseEntity<Cliente> update(@PathVariable("id") Long id, @RequestBody ClienteRequest clienteRequest, HttpServletRequest request) {
 
-        clienteService.update(id, request.build());
+        clienteService.update(id, request.build(), usuarioService.obterUsuarioLogado(request));
         return ResponseEntity.ok().build();
     }
 
