@@ -3,6 +3,9 @@ package br.com.ifpe.oxefood_api_luana.modelo.cliente;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.ifpe.oxefood_api_luana.modelo.acesso.Perfil;
+import br.com.ifpe.oxefood_api_luana.modelo.acesso.PerfilRepository;
+import br.com.ifpe.oxefood_api_luana.modelo.acesso.UsuarioService;
 import br.com.ifpe.oxefood_api_luana.modelo.cliente.endereco.EnderecoCliente;
 import br.com.ifpe.oxefood_api_luana.modelo.cliente.endereco.EnderecoClienteRepository;
 import br.com.ifpe.oxefood_api_luana.util.exception.ClienteException;
@@ -20,15 +23,32 @@ public class ClienteService {
     @Autowired
     private EnderecoClienteRepository enderecoClienteRepository;
 
+    @Autowired
+    private UsuarioService usuarioService;
+
+    @Autowired
+    private PerfilRepository perfilUsuarioRepository;
+
     @Transactional // Tudo que for feito no db só pode ser criado se tudo der certo, se der um
                    // unico erro td a transação falha
     public Cliente save(Cliente cliente) {
         if ((!cliente.getFoneCelular().startsWith("(81)"))) {
             throw new ClienteException(ClienteException.MSG_TELEFON_INVALIDO);
         }
-        // retorna o cliente com o ID(Pq ele recebe id no db)
+        usuarioService.save(cliente.getUsuario());
+
+        for (Perfil perfil : cliente.getUsuario().getRoles()) {
+            perfil.setHabilitado(Boolean.TRUE);
+            perfilUsuarioRepository.save(perfil);
+
+        }
+
         cliente.setHabilitado(Boolean.TRUE);
-        return repository.save(cliente);
+
+        Cliente clienteSalvo = repository.save(cliente);
+
+        return clienteSalvo; // retorna o cliente com o ID(Pq ele recebe id no db)
+
     }
 
     public List<Cliente> listarTodos() {
@@ -118,6 +138,5 @@ public class ClienteService {
         cliente.getEnderecos().remove(endereco);
         repository.save(cliente);
     }
-
 
 }
