@@ -9,6 +9,7 @@ import br.com.ifpe.oxefood_api_luana.modelo.acesso.Usuario;
 import br.com.ifpe.oxefood_api_luana.modelo.acesso.UsuarioService;
 import br.com.ifpe.oxefood_api_luana.modelo.cliente.endereco.EnderecoCliente;
 import br.com.ifpe.oxefood_api_luana.modelo.cliente.endereco.EnderecoClienteRepository;
+import br.com.ifpe.oxefood_api_luana.modelo.menssagens.EmailService;
 import br.com.ifpe.oxefood_api_luana.util.exception.ClienteException;
 
 import java.util.ArrayList;
@@ -26,6 +27,9 @@ public class ClienteService {
 
     @Autowired
     private UsuarioService usuarioService;
+
+    @Autowired
+    private EmailService emailService;
 
     @Autowired
     private PerfilRepository perfilUsuarioRepository;
@@ -47,6 +51,8 @@ public class ClienteService {
         cliente.setHabilitado(Boolean.TRUE);
         cliente.setCriadoPor(usuarioLogado); //setar o usuario logado
         Cliente clienteSalvo = repository.save(cliente);
+
+        emailService.enviarEmailConfirmacaoCadastroCliente(clienteSalvo); //Envia o amail definido no arq html
 
         return clienteSalvo; // retorna o cliente com o ID(Pq ele recebe id no db)
 

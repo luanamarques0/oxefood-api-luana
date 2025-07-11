@@ -1,6 +1,7 @@
 package br.com.ifpe.oxefood_api_luana.modelo.cliente.endereco;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import org.hibernate.annotations.SQLRestriction;
 
@@ -51,6 +52,6 @@ public class EnderecoCliente extends EntidadeAuditavel {
 
    @Column
    private String complemento;
-  
+
 }
 

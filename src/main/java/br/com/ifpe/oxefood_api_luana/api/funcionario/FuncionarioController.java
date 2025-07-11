@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.ifpe.oxefood_api_luana.modelo.acesso.Perfil;
-import br.com.ifpe.oxefood_api_luana.modelo.acesso.Usuario;
 import br.com.ifpe.oxefood_api_luana.modelo.funcionario.Funcionario;
 import br.com.ifpe.oxefood_api_luana.modelo.funcionario.FuncionarioService;
 import br.com.ifpe.oxefood_api_luana.modelo.funcionario.TipoFuncionario;

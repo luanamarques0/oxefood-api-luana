@@ -7,6 +7,8 @@ import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.SQLRestriction;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import br.com.ifpe.oxefood_api_luana.modelo.acesso.Usuario;
 import br.com.ifpe.oxefood_api_luana.modelo.cliente.endereco.EnderecoCliente;
 import br.com.ifpe.oxefood_api_luana.util.entity.EntidadeAuditavel;

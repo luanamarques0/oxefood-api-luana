@@ -1,5 +1,8 @@
 package br.com.ifpe.oxefood_api_luana.api.cliente;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +29,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/cliente")
 @CrossOrigin // Conseguir receber requisições de outros dominios(REact no nosso caso)
+@Tag(name = "API Cliente", description = "API responsável pelos servidos de cliente no sistema")
 public class ClienteController {
 
     @Autowired
@@ -34,31 +38,52 @@ public class ClienteController {
     @Autowired
     private UsuarioService usuarioService;
 
+    @Operation(
+        summary = "Serviço responsável por salvar um cliente no sistema.",
+        description = "Exemplo de descrição de um endpoint responsável por inserir um cliente no sistema."
+    )
     @PostMapping
     public ResponseEntity<Cliente> save(@RequestBody @Valid ClienteRequest clienteRequest, HttpServletRequest request) {
 
+        Cliente cliente = clienteService.save(clienteRequest.build(), usuarioService.obterUsuarioLogado(request)); // build
 
-        Cliente cliente = clienteService.save(request.build(), usuarioService.obterUsuarioLogado(request)); // build cria o cliente a partir do request
         return new ResponseEntity<Cliente>(cliente, HttpStatus.CREATED);
     }
 
+    @Operation(
+        summary = "Serviço responsável por listar todos cliente no sistema.",
+        description = "Exemplo de descrição de um endpoint responsável por listar todos os cliente no sistema."
+    )
     @GetMapping
     public List<Cliente> listarTodos() {
         return clienteService.listarTodos();
     }
 
+    @Operation(
+        summary = "Serviço responsável listar um cliente de acordo com o ID recebido na url.",
+        description = "Exemplo de descrição de um endpoint responsável por listar um cliente no sistema."
+    )
     @GetMapping("/{id}")
     public Cliente obterPorID(@PathVariable Long id) {
         return clienteService.obterPorID(id);
     }
 
+    @Operation(
+        summary = "Serviço responsável editar um cliente de acordo com o ID recebido na url.",
+        description = "Exemplo de descrição de um endpoint responsável por editar um cliente no sistema."
+    )
     @PutMapping("/{id}")
-    public ResponseEntity<Cliente> update(@PathVariable("id") Long id, @RequestBody ClienteRequest clienteRequest, HttpServletRequest request) {
+    public ResponseEntity<Cliente> update(@PathVariable("id") Long id, @RequestBody ClienteRequest clienteRequest,
+            HttpServletRequest request) {
 
-        clienteService.update(id, request.build(), usuarioService.obterUsuarioLogado(request));
+        clienteService.update(id, clienteRequest.build(), usuarioService.obterUsuarioLogado(request));
         return ResponseEntity.ok().build();
     }
 
+    @Operation(
+        summary = "Serviço responsável deletar um cliente de acordo com o ID recebido na url.",
+        description = "Exemplo de descrição de um endpoint responsável por deletar um cliente no sistema."
+    )
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
 
