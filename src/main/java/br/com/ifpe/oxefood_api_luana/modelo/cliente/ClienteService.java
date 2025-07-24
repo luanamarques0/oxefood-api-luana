@@ -93,7 +93,7 @@ public class ClienteService {
         repository.save(cliente);
     }
 
-    // Métodos de endereço
+    // -------------------------------- Métodos de endereço --------------------------------
 
     @Transactional
     public EnderecoCliente adicionarEnderecoCliente(Long clienteId, EnderecoCliente endereco) {

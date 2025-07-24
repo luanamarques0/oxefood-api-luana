@@ -1,11 +1,15 @@
 package br.com.ifpe.oxefood_api_luana.api.entregador;
 
 import java.time.LocalDate;
+import java.util.Arrays;
 
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.br.CPF;
 
+import br.com.ifpe.oxefood_api_luana.modelo.acesso.Perfil;
+import br.com.ifpe.oxefood_api_luana.modelo.acesso.Usuario;
 import br.com.ifpe.oxefood_api_luana.modelo.entregador.Entregador;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,12 +21,18 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class EntregadorRequest {
+    @NotBlank(message = "O e-mail é de preenchimento obrigatório")
+    @Email
+    private String email;
+
+    @NotBlank(message = "A senha é de preenchimento obrigatório")
+    private String password;
 
     @NotBlank(message = "O Nome é de preenchimento obrigatório")
     private String nome;
 
     @NotBlank(message = "O CPF é de preenchimento obrigatório")
-    @CPF
+    // @CPF
     private String cpf;
 
     private String rg;
@@ -56,6 +66,14 @@ public class EntregadorRequest {
     private String enderecoUf;
 
     private Boolean ativo;
+
+    public Usuario buildUsuario() {
+        return Usuario.builder()
+                .username(email)
+                .password(password)
+                .roles(Arrays.asList(new Perfil(Perfil.ROLE_FUNCIONARIO_ADMIN)))
+                .build();
+    }
 
     public Entregador build() {
         return Entregador.builder()

@@ -40,8 +40,9 @@ public class Usuario extends EntidadeNegocio implements UserDetails {
    private String password;
 
    @JsonIgnore
-   @ElementCollection(fetch = FetchType.EAGER)
-   @Builder.Default
+   // @ElementCollection para armazenar uma coleção de elementos básicos ou embutidos (Perfil)
+   @ElementCollection(fetch = FetchType.EAGER) // FetchType.EAGER garante que os perfis sejam carregados junto com o usuário
+   @Builder.Default // @Builder.Default para garantir inicialização padrão do atributo (ArrayList vazio)
    private List<Perfil> roles = new ArrayList<>();
 
    @Override
@@ -58,23 +59,44 @@ public class Usuario extends EntidadeNegocio implements UserDetails {
        return password;
    }
 
+   // Indica se a conta não expirou (sempre true aqui, ou seja, conta está válida)
    @Override
    public boolean isAccountNonExpired() {
        return true;
    }
 
+   // Indica se a conta não está bloqueada (sempre true)
    @Override
    public boolean isAccountNonLocked() {
        return true;
    }
 
+   // Indica se as credenciais (senha) não expiraram (sempre true)
    @Override
    public boolean isCredentialsNonExpired() {
        return true;
    }
 
+   // Indica se o usuário está habilitado (sempre true)
    @Override
    public boolean isEnabled() {
        return true;
    }
 }
+
+
+// @Override
+//    public Collection<? extends GrantedAuthority> getAuthorities() {
+//        return roles;
+//    }
+
+//    Ele é um método da interface UserDetails do Spring Security.
+
+// Serve para retornar as permissões (autoridades) que o usuário possui no sistema.
+
+// Essas permissões são usadas pelo Spring Security para controlar o que o usuário pode ou não acessar.
+// Quando um usuário faz login, o Spring Security consulta esse método para saber quais autoridades ele tem.
+
+// Com isso, ele decide se pode acessar certas rotas, recursos ou funcionalidades do sistema.
+
+// Por exemplo, só usuários com a role ADMIN podem acessar a página administrativa.

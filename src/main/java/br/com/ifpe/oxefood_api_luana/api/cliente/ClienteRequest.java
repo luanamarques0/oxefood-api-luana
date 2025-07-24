@@ -5,6 +5,7 @@ import java.util.Arrays;
 
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.br.CPF;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -12,6 +13,7 @@ import br.com.ifpe.oxefood_api_luana.modelo.acesso.Perfil;
 import br.com.ifpe.oxefood_api_luana.modelo.acesso.Usuario;
 import br.com.ifpe.oxefood_api_luana.modelo.cliente.Cliente;
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -32,10 +34,12 @@ public class ClienteRequest {
     private String nome;
 
     @JsonFormat(pattern = "dd/MM/yyyy")
+    // @DateTimeFormat(pattern = "dd/MM/yyyy")
+    // @FutureOrPresent(message = "A data deve ser hoje ou uma data futura") -> para datas presentes ou futuras
     private LocalDate dataNascimento;
 
     @NotBlank(message = "O CPF é de preenchimento obrigatório")
-    @CPF
+    // @CPF
     private String cpf;
 
     @Length(min = 8, max = 20, message = "O campo Fone tem que ter entre {min} e {max} caracteres")

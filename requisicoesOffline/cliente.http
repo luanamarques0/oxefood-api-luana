@@ -1,0 +1,93 @@
+@baseUrl = http://localhost:8081/api/cliente
+@clienteId = 1
+@enderecoId = 1
+
+//Ctrl+Alt+R -> para rodar
+
+### [GET] Buscar todos os clientes
+GET {{baseUrl}} HTTP/1.1
+Accept: application/hal+json
+
+###
+
+### [GET] Buscar cliente por ID
+GET {{baseUrl}}/{{clienteId}} HTTP/1.1
+Accept: application/hal+json
+
+###
+
+### [POST] Cadastrar novo cliente
+POST {{baseUrl}} HTTP/1.1
+Content-Type: application/json
+Accept: application/hal+json
+
+{
+  "nome": "luana Silva",
+  "dataNascimento": "21/12/1965",
+  "cpf": "12345678900",
+  "foneCelular": "(81) 99999-9999",
+  "foneFixo": "(81) 3333-3333",
+  "email": "luanamarques.silv@gmail.com",
+  "password": "senha123"
+}
+
+###
+
+### [PUT] Atualizar cliente existente
+PUT {{baseUrl}}/{{clienteId}} HTTP/1.1
+Content-Type: application/json
+Accept: application/hal+json
+
+{
+  "nome": "João Silva Atualizado",
+  "dataNascimento": "1990-05-15",
+  "cpf": "12345678900",
+  "foneCelular": "(11) 98888-8888",
+  "foneFixo": "(11) 3222-1111",
+  "email": "joao.novo@email.com",
+  "password": "novaSenha123"
+}
+
+###
+
+### [DELETE] Deletar cliente
+DELETE {{baseUrl}}/{{clienteId}} HTTP/1.1
+
+###
+
+### [POST] Adicionar endereço a um cliente
+POST {{baseUrl}}/endereco/{{clienteId}} HTTP/1.1
+Content-Type: application/json
+Accept: application/hal+json
+
+{
+  "rua": "Rua das Flores",
+  "numero": "123",
+  "bairro": "Centro",
+  "cep": "12345-678",
+  "cidade": "São Paulo",
+  "estado": "SP",
+  "complemento": "Apto 101"
+}
+
+###
+
+### [PUT] Atualizar endereço
+PUT {{baseUrl}}/endereco/{{enderecoId}} HTTP/1.1
+Content-Type: application/json
+Accept: application/hal+json
+
+{
+  "rua": "Rua Atualizada",
+  "numero": "456",
+  "bairro": "Bela Vista",
+  "cep": "87654-321",
+  "cidade": "Campinas",
+  "estado": "SP",
+  "complemento": "Casa"
+}
+
+###
+
+### [DELETE] Deletar endereço
+DELETE {{baseUrl}}/endereco/{{enderecoId}} HTTP/1.1

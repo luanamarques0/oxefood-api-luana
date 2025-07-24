@@ -28,7 +28,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class EnderecoCliente extends EntidadeAuditavel {
 
-   @JsonIgnore
+   @JsonIgnore // Evita que o cliente seja serializado no JSON
    @ManyToOne
    private Cliente cliente;
 

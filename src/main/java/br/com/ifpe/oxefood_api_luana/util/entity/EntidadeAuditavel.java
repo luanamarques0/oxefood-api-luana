@@ -34,7 +34,7 @@ public abstract class EntidadeAuditavel extends EntidadeNegocio {
     private LocalDate dataCriacao;
 
     @JsonIgnore
-    @LastModifiedDate
+    @LastModifiedDate //Quando foi auterada
     private LocalDate dataUltimaModificacao;
 
     @CreatedBy

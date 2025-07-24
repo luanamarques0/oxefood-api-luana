@@ -4,9 +4,13 @@ import java.time.LocalDate;
 
 import org.hibernate.annotations.SQLRestriction;
 
+import br.com.ifpe.oxefood_api_luana.modelo.acesso.Usuario;
 import br.com.ifpe.oxefood_api_luana.util.entity.EntidadeAuditavel;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -24,6 +28,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Entregador extends EntidadeAuditavel {
+
+    @OneToOne
+    @JoinColumn(nullable = false)
+    private Usuario usuario;
+
     @Column(nullable = false, length = 100)
     private String nome;
 

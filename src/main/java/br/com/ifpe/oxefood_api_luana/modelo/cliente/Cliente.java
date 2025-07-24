@@ -27,7 +27,7 @@ import lombok.Setter;
 
 @Entity
 @Table(name = "Cliente")
-@SQLRestriction("habilitado = true")
+@SQLRestriction("habilitado = true") // Restrição para que apenas os registros com "habilitado = true" sejam considerados nas queries
 
 @Builder
 @Getter
@@ -37,11 +37,11 @@ import lombok.Setter;
 public class Cliente extends EntidadeAuditavel {
 
     @OneToOne
-    @JoinColumn(nullable = false)
+    @JoinColumn(nullable = false) // Cria uma chave estrangeira obrigatória
     private Usuario usuario;
 
-    @OneToMany(mappedBy = "cliente", orphanRemoval = true, fetch = FetchType.EAGER)
-    @Fetch(FetchMode.SUBSELECT)
+    @OneToMany(mappedBy = "cliente", orphanRemoval = true, fetch = FetchType.EAGER) // EAGER para carregar os endereços junto com o cliente // orphanRemoval = true para remover endereços associados quando o cliente for removido
+    @Fetch(FetchMode.SUBSELECT) // Estratégia para evitar problema de "Cartesian product" ao buscar vários endereços
     private List<EnderecoCliente> enderecos;
 
     @Column(nullable = false, length = 100)

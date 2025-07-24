@@ -13,8 +13,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.ifpe.oxefood_api_luana.modelo.acesso.UsuarioService;
 import br.com.ifpe.oxefood_api_luana.modelo.entregador.Entregador;
 import br.com.ifpe.oxefood_api_luana.modelo.entregador.EntregadorService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 
 import java.util.List;
@@ -27,10 +29,13 @@ public class EntregadorController {
     @Autowired
     private EntregadorService entregadorService;
 
-    @PostMapping
-    public ResponseEntity<Entregador> save(@RequestBody @Valid EntregadorRequest request) {
+    @Autowired
+    private UsuarioService usuarioService;
 
-        Entregador entregador = entregadorService.save(request.build());
+    @PostMapping
+    public ResponseEntity<Entregador> save(@RequestBody @Valid EntregadorRequest entregadorRequest, HttpServletRequest request) {
+
+        Entregador entregador = entregadorService.save(entregadorRequest.build(), usuarioService.obterUsuarioLogado(request));
         return new ResponseEntity<Entregador> (entregador, HttpStatus.CREATED);
     }
 
@@ -45,9 +50,9 @@ public class EntregadorController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Entregador> update(@PathVariable("id") Long id, @RequestBody EntregadorRequest request) {
+    public ResponseEntity<Entregador> update(@PathVariable("id") Long id, @RequestBody EntregadorRequest entregadorRequest, HttpServletRequest request) {
 
-        entregadorService.update(id, request.build());
+        entregadorService.update(id, entregadorRequest.build(), usuarioService.obterUsuarioLogado(request));
         return ResponseEntity.ok().build();
     }
 

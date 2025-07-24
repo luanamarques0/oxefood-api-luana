@@ -3,6 +3,12 @@ package br.com.ifpe.oxefood_api_luana.modelo.entregador;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.ifpe.oxefood_api_luana.modelo.acesso.Perfil;
+import br.com.ifpe.oxefood_api_luana.modelo.acesso.PerfilRepository;
+import br.com.ifpe.oxefood_api_luana.modelo.acesso.Usuario;
+import br.com.ifpe.oxefood_api_luana.modelo.acesso.UsuarioService;
+
+import java.time.LocalDate;
 import java.util.List;
 import jakarta.transaction.Transactional;
 
@@ -11,11 +17,29 @@ public class EntregadorService {
     @Autowired
     private EntregadorRepository repository;
 
+    @Autowired
+    private UsuarioService usuarioService;
+
+    @Autowired
+    private PerfilRepository perfilUsuarioRepository;
+
     @Transactional
-    public Entregador save(Entregador entregador) {
+    public Entregador save(Entregador entregador, Usuario usuarioLogado) {
+
+        usuarioService.save(entregador.getUsuario());
+
+        for (Perfil perfil : entregador.getUsuario().getRoles()) {
+            perfil.setHabilitado(Boolean.TRUE);
+            perfilUsuarioRepository.save(perfil);
+        }
 
         entregador.setHabilitado(Boolean.TRUE);
-        return repository.save(entregador);
+        entregador.setCriadoPor(usuarioLogado);
+
+        Entregador entregadorSalvo = repository.save(entregador);
+
+        return entregadorSalvo;
+
     }
 
     public List<Entregador> listarTodosEntregadores() {
@@ -27,7 +51,7 @@ public class EntregadorService {
     }
 
     @Transactional
-    public void update(Long id, Entregador entregadorAlterado) {
+    public void update(Long id, Entregador entregadorAlterado, Usuario usuarioLogado) {
 
         Entregador entregador = repository.findById(id).get();
         entregador.setNome(entregadorAlterado.getNome());
@@ -46,6 +70,10 @@ public class EntregadorService {
         entregador.setEnderecoCep(entregadorAlterado.getEnderecoCep());
         entregador.setEnderecoUf(entregadorAlterado.getEnderecoUf());
         entregador.setAtivo(entregadorAlterado.getAtivo());
+
+        entregador.setUltimaModificacaoPor(usuarioLogado);
+        entregador.setDataUltimaModificacao(LocalDate.now());
+
         repository.save(entregador);
     }
 
